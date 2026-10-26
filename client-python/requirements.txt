@@ -7,13 +7,13 @@ python_json_logger~=3.3.0
 PyYAML~=6.0
 pydantic>=2.8.2, <3
 requests>=2.32.0, <3
-setuptools~=80.9.0
+setuptools>=84.1.0,<85
 cachetools~=5.5.2
 prometheus-client~=0.22.1
-opentelemetry-api~=1.35.0
-opentelemetry-sdk~=1.35.0
+opentelemetry-api>=1.44.0,<2
+opentelemetry-sdk>=1.44.0,<2
 deprecation~=2.1.0
-fastapi>=0.115.2, <1
+fastapi>=0.162.0,<1
 uvicorn[standard]>=0.34.0,<0.36.0
 # OpenCTI
 filigran-sseclient>=1.0.2
