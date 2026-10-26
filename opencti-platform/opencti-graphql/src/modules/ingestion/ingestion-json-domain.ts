@@ -169,7 +169,7 @@ export const executeJsonQuery = async (context: AuthContext, ingestion: BasicSto
   }
   const httpClientOptions: GetHttpClient = {
     headers,
-    rejectUnauthorized: ingestion.ssl_verify ?? false,
+    rejectUnauthorized: ingestion.ssl_verify,
     timeout,
     responseType: 'json',
     certificates,
