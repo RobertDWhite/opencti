@@ -8,4 +8,6 @@ services:
       - discovery.type=single-node
       - DISABLE_SECURITY_PLUGIN=true
       - DISABLE_INSTALL_DEMO_CONFIG=true
+      # OpenSearch keeps a fixed default of 1024, too low for some OpenCTI queries (Elasticsearch sizes it from the heap)
+      - indices.query.bool.max_clause_count=4096
       - "OPENSEARCH_JAVA_OPTS=-Xms2G -Xmx2G"
