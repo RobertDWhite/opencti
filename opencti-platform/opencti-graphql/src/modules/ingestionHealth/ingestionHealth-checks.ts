@@ -194,9 +194,15 @@ export const markHealthNotified = (health: StoredIngestionHealth, transition: He
   return transition === HealthTransition.Recovered ? healthWithoutEvent : { ...healthWithoutEvent, last_event_date: evaluatedAt };
 };
 
+// Fills the {key} placeholders of a check message from its metadata, untranslated. A placeholder without value is kept
+export const formatHealthCheckMessage = (message: string, metadata: HealthCheckMetadata) => {
+  return message.replace(/\{(\w+)\}/g, (placeholder, key: string) => (metadata[key] !== undefined ? String(metadata[key]) : placeholder));
+};
+
 // The activity log prefixes the message with the manager user name
 export const buildHealthTransitionMessage = (element: { name: string; entity_type: string }, transition: HealthTransition, checks: StoredHealthCheck[]) => {
-  const checkMessages = toGraphqlHealthChecks(checks, element.entity_type).map((check) => check.health_check_message);
+  const checkMessages = toGraphqlHealthChecks(checks, element.entity_type)
+    .map((check) => formatHealthCheckMessage(check.health_check_message ?? check.health_check_code, check.health_check_metadata ?? {}));
   const details = checkMessages.length > 0 ? `: ${checkMessages.join(', ')}` : '';
   return `reports \`${element.name}\` (${element.entity_type}) as ${transition}${details}`;
 };
